@@ -9,8 +9,8 @@ struct Artist {
     int yearBorn;
 };
 
-class Song;   // Forward declaration
-class Album;  // Forward declaration
+class Song;  
+class Album; 
 
 // ===== FRIEND FUNCTIONS =====
 void displaySong(const Song& s);
@@ -382,3 +382,4 @@ int main() {
 
     return 0;
 }
+
