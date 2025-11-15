@@ -8,6 +8,14 @@ struct Artist {
     string genre;
     int yearBorn;
 };
+
+class Song;   // Forward declaration
+class Album;  // Forward declaration
+
+// ===== FRIEND FUNCTIONS =====
+void displaySong(const Song& s);
+void displayAlbum(const Album& a);
+
 class Media {
 protected:
     string title;
@@ -30,11 +38,7 @@ public:
         : Media(t), artist(a), duration(d) {}
 
     void display() const {
-        cout << "Song: " << title << endl;
-        cout << "Artist: " << artist.name
-             << " | Genre: " << artist.genre
-             << " | Born: " << artist.yearBorn << endl;
-        cout << "Duration: " << duration << " mins\n";
+        displaySong(*this);   // friend function
     }
 
     // getters
@@ -47,6 +51,9 @@ public:
         artist = a;
         duration = d;
     }
+
+    // Declare friend
+    friend void displaySong(const Song& s);
 };
 
 class Album : public Media {
@@ -80,19 +87,19 @@ public:
     void editSong(int index) {
         if (index >= 0 && index < numSongs) {
 
-            string t, name, gen;
+            char t[100], name[100], gen[100];
             int y;
             double d;
 
             cin.ignore();
             cout << "New song title: ";
-            getline(cin, t);
+            cin.getline(t, 100);
 
             cout << "Artist name: ";
-            getline(cin, name);
+            cin.getline(name, 100);
 
             cout << "Genre: ";
-            getline(cin, gen);
+            cin.getline(gen, 100);
 
             cout << "Year Born: ";
             cin >> y;
@@ -110,17 +117,36 @@ public:
     }
 
     void display() const {
-        cout << "\nAlbum: " << title << endl;
-        cout << "Songs: " << numSongs << endl;
-        for (int i = 0; i < numSongs; i++) {
-            cout << "---- Song #" << i << " ----\n";
-            songs[i].display();
-        }
+        displayAlbum(*this);
     }
 
     int getNumSongs() const { return numSongs; }
     Song getSong(int i) const { return songs[i]; }
+
+    // Declare friend
+    friend void displayAlbum(const Album& a);
 };
+
+// ===== FRIEND FUNCTION DEFINITIONS =====
+
+void displaySong(const Song& s) {
+    cout << "Song: " << s.title << endl;
+    cout << "Artist: " << s.artist.name
+         << " | Genre: " << s.artist.genre
+         << " | Born: " << s.artist.yearBorn << endl;
+    cout << "Duration: " << s.duration << " mins\n";
+}
+
+void displayAlbum(const Album& a) {
+    cout << "\nAlbum: " << a.title << endl;
+    cout << "Songs: " << a.numSongs << endl;
+    for (int i = 0; i < a.numSongs; i++) {
+        cout << "---- Song #" << i << " ----\n";
+        a.songs[i].display();
+    }
+}
+
+// =================== MUSIC LIBRARY ===================
 
 class MusicLibrary {
 private:
@@ -229,8 +255,8 @@ public:
         file.ignore();
 
         for (int i = 0; i < albumCount; i++) {
-            string title;
-            getline(file, title);
+            char title[200];
+            file.getline(title, 200);
             addAlbum(title);
 
             int songCount;
@@ -238,13 +264,13 @@ public:
             file.ignore();
 
             for (int j = 0; j < songCount; j++) {
-                string st, name, gen;
+                char st[200], name[200], gen[200];
                 int y;
                 double d;
 
-                getline(file, st);
-                getline(file, name);
-                getline(file, gen);
+                file.getline(st, 200);
+                file.getline(name, 200);
+                file.getline(gen, 200);
                 file >> y;
                 file >> d;
                 file.ignore();
@@ -260,7 +286,7 @@ public:
     }
 };
 
-// MAIN
+// ====================== MAIN ======================
 int main() {
     MusicLibrary lib;
     lib.loadFromFile("library.txt");
@@ -283,29 +309,28 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            string title;
+            char title[100];
             cin.ignore();
             cout << "Enter album title: ";
-            getline(cin, title);
+            cin.getline(title, 100);
             lib.addAlbum(title);
         }
         else if (choice == 2) {
             int index;
-            cin.ignore();
             cout << "Album index: ";
             cin >> index;
             cin.ignore();
 
-            string t, name, gen;
+            char t[100], name[100], gen[100];
             int y;
             double d;
 
             cout << "Song title: ";
-            getline(cin, t);
+            cin.getline(t, 100);
             cout << "Artist name: ";
-            getline(cin, name);
+            cin.getline(name, 100);
             cout << "Genre: ";
-            getline(cin, gen);
+            cin.getline(gen, 100);
             cout << "Year born: ";
             cin >> y;
             cout << "Duration: ";
@@ -317,12 +342,12 @@ int main() {
         }
         else if (choice == 3) {
             int index;
-            string title;
+            char title[100];
             cout << "Album index: ";
             cin >> index;
             cin.ignore();
             cout << "New album title: ";
-            getline(cin, title);
+            cin.getline(title, 100);
             lib.editAlbumTitle(index, title);
         }
         else if (choice == 4) {
@@ -353,11 +378,7 @@ int main() {
         else if (choice == 8)
             lib.saveToFile("library.txt");
 
-    } while (choice != 0);
+    } while (choice != 9);
 
     return 0;
 }
-
-    return 0;
-}
-
