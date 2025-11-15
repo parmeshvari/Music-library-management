@@ -6,16 +6,18 @@ It implements a small **Music Library Management System** where you can add albu
 ---
 
 ## 🚀 Features
-- Add Albums and Songs dynamically  
-- Display full Music Library with albums and songs  
-- Search songs longer than a given duration  
-- Scale (modify) song duration using the `this` pointer  
-- Combine songs from different albums using **operator overloading**  
-- Demonstrate **multiple inheritance** (`Media` + `Exportable`)  
-- Swap songs using **function template**  
-- Search songs using **class template**  
-- Save and load library data using **file handling**  
-- Exception handling for invalid inputs, album/library limits, etc.
+✔ Add Albums (fixed array)
+✔ Add Songs (fixed array)
+✔ Display full Library (albums + songs)
+✔ Edit Album Title
+✔ Edit Song
+✔ Delete Album
+✔ Delete Song
+✔ Save to file
+✔ Load from file
+✔ Uses classes, inheritance,
+✔ Uses composition (Album contains Songs)
+✔ Uses friend functions (after we added them) 
 
 ---
 
