@@ -38,21 +38,18 @@ public:
         : Media(t), artist(a), duration(d) {}
 
     void display() const {
-        displaySong(*this);   // friend function
+        displaySong(*this);  
     }
 
-    // getters
     Artist getArtist() const { return artist; }
     double getDuration() const { return duration; }
 
-    // for editing
     void setSong(string t, Artist a, double d) {
         title = t;
         artist = a;
         duration = d;
     }
 
-    // Declare friend
     friend void displaySong(const Song& s);
 };
 
@@ -127,8 +124,6 @@ public:
     friend void displayAlbum(const Album& a);
 };
 
-// ===== FRIEND FUNCTION DEFINITIONS =====
-
 void displaySong(const Song& s) {
     cout << "Song: " << s.title << endl;
     cout << "Artist: " << s.artist.name
@@ -146,7 +141,7 @@ void displayAlbum(const Album& a) {
     }
 }
 
-// =================== MUSIC LIBRARY ===================
+// ------- MUSIC LIBRARY --------
 
 class MusicLibrary {
 private:
@@ -240,8 +235,6 @@ public:
 
         cout << "Saved.\n";
     }
-
-    // -------- LOAD --------
     void loadFromFile(const string& filename) {
         ifstream file(filename);
         if (!file) {
@@ -285,8 +278,6 @@ public:
         cout << "Loaded.\n";
     }
 };
-
-// ====================== MAIN ======================
 int main() {
     MusicLibrary lib;
     lib.loadFromFile("library.txt");
@@ -382,4 +373,5 @@ int main() {
 
     return 0;
 }
+
 
